@@ -16,5 +16,6 @@ class ConfigSeeder extends Seeder
         Config::firstOrCreate(['key' => 'max_login_time_duration', 'value' => 600]);
         Config::firstOrCreate(['key' => 'max_token_duration', 'value' => 18000]);
         Config::firstOrCreate(['key' => 'login_lock_duration', 'value' => 900]);
+        Config::firstOrCreate(['key' => 'login_attempt_duration', 'value' => 60]);
     }
 }

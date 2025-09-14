@@ -23,26 +23,26 @@ USE `esame_sessione4`;
 CREATE TABLE IF NOT EXISTS `accesses` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `ip` varchar(45) NOT NULL,
+  `user_hash` varchar(255) NOT NULL,
   `attempts` tinyint(4) NOT NULL,
-  `last_attempt_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `attempt_start_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `last_attempt_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.accesses: ~10 rows (circa)
-INSERT INTO `accesses` (`id`, `ip`, `attempts`, `last_attempt_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, '127.0.0.1', 0, '2025-07-23 10:31:03', '2025-07-23 08:31:00', '2025-07-23 08:31:03', '2025-07-23 08:31:03'),
-	(2, '127.0.0.1', 0, '2025-07-25 20:48:10', '2025-07-25 18:24:03', '2025-07-25 18:48:10', '2025-07-25 18:48:10'),
-	(3, '127.0.0.1', 0, '2025-07-25 20:48:19', '2025-07-25 18:48:19', '2025-07-25 18:48:19', '2025-07-25 18:48:19'),
-	(4, '127.0.0.1', 0, '2025-07-25 20:49:19', '2025-07-25 18:49:18', '2025-07-25 18:49:19', '2025-07-25 18:49:19'),
-	(5, '127.0.0.1', 0, '2025-07-25 20:51:44', '2025-07-25 18:51:44', '2025-07-25 18:51:44', '2025-07-25 18:51:44'),
-	(6, '127.0.0.1', 0, '2025-07-25 20:53:35', '2025-07-25 18:53:34', '2025-07-25 18:53:35', '2025-07-25 18:53:35'),
-	(7, '127.0.0.1', 0, '2025-07-25 20:53:47', '2025-07-25 18:53:47', '2025-07-25 18:53:47', '2025-07-25 18:53:47'),
-	(8, '127.0.0.1', 0, '2025-07-26 13:11:12', '2025-07-26 11:11:10', '2025-07-26 11:11:12', '2025-07-26 11:11:12'),
-	(9, '127.0.0.1', 0, '2025-08-02 20:10:34', '2025-08-02 18:10:31', '2025-08-02 18:10:34', '2025-08-02 18:10:34'),
-	(10, '127.0.0.1', 0, '2025-08-02 20:17:54', '2025-08-02 18:17:53', '2025-08-02 18:17:54', '2025-08-02 18:17:54');
+-- Dump dei dati della tabella esame_sessione4.accesses: ~1 rows (circa)
+INSERT INTO `accesses` (`id`, `ip`, `user_hash`, `attempts`, `attempt_start_at`, `last_attempt_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(42, '127.0.0.1', 'testhash', 1, '2025-09-05 19:19:59', NULL, '2025-09-05 17:19:59', '2025-09-05 17:19:59', NULL),
+	(43, '127.0.0.1', 'newTest', 2, '2025-09-14 19:47:30', '2025-09-14 17:47:30', '2025-09-14 17:47:29', '2025-09-14 17:47:30', NULL),
+	(44, '127.0.0.1', '$2y$12$fTs9WKfrqDuL/hs1qhYyHu9iz37czGDPZMOttHIm.UVJl8E4nxdKa', 2, '2025-09-14 20:09:16', '2025-09-14 18:09:16', '2025-09-14 18:09:16', '2025-09-14 18:09:16', NULL),
+	(45, '127.0.0.1', '$2y$12$akcsF0Y7lMcOmJE.17EaKeifG7R.beED42aEy4n7fx6nTNTLGw/NW', 2, '2025-09-14 20:11:11', '2025-09-14 18:11:11', '2025-09-14 18:11:11', '2025-09-14 18:11:11', NULL),
+	(46, '127.0.0.1', '$2y$12$Beh8Cfi2Fum7UsAAS8aul.QIMhiPBqzNKqMLVlo3iVFhmxVz8IFBm', 1, '2025-09-14 20:13:40', NULL, '2025-09-14 18:13:37', '2025-09-14 18:13:40', '2025-09-14 18:13:40'),
+	(47, '127.0.0.1', '$2y$12$8I0xl/UDjLl9Q/LvOUY0Pe7K3WcLRjAgUnBqV9dn455sqYT6JXPrK', 1, '2025-09-14 20:15:08', NULL, '2025-09-14 18:15:08', '2025-09-14 18:15:08', NULL),
+	(48, '127.0.0.1', '73dd788969efe16e001528df4a2036ff94c1927b38a5aa0ba4deb5918b10ebd9', 1, '2025-09-14 20:28:03', NULL, '2025-09-14 18:28:03', '2025-09-14 18:28:03', '2025-09-14 18:28:03'),
+	(49, '127.0.0.1', '73dd788969efe16e001528df4a2036ff94c1927b38a5aa0ba4deb5918b10ebd9', 3, '2025-09-14 20:35:45', '2025-09-14 18:28:19', '2025-09-14 18:28:07', '2025-09-14 18:35:45', '2025-09-14 18:35:45');
 
 -- Dump della struttura di tabella esame_sessione4.addresses
 CREATE TABLE IF NOT EXISTS `addresses` (
@@ -64,12 +64,12 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   CONSTRAINT `addresses_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE SET NULL,
   CONSTRAINT `addresses_italian_municipality_id_foreign` FOREIGN KEY (`italian_municipality_id`) REFERENCES `italian_municipalities` (`id`) ON DELETE SET NULL,
   CONSTRAINT `addresses_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.addresses: ~2 rows (circa)
+-- Dump dei dati della tabella esame_sessione4.addresses: ~0 rows (circa)
 INSERT INTO `addresses` (`id`, `user_id`, `country_id`, `italian_municipality_id`, `cap`, `street_address`, `house_number`, `locality`, `additional_info`, `created_at`, `updated_at`) VALUES
-	(2, 6, 1, 1, '1910', 'bro street', '69', 'losercity', 'test', '2025-07-23 08:30:05', '2025-07-23 08:30:05'),
-	(3, 7, 1, 1, '1910', 'bro street', '69', 'losercity', 'test', '2025-07-23 08:31:00', '2025-07-23 08:31:00');
+	(4, 10, 1, 1, '19103', 'bro street', '69', 'losercity', 'test', '2025-09-05 15:12:00', '2025-09-05 15:12:00'),
+	(18, 25, 1, 1, '19103', 'bro street', '69', 'losercity', 'test', '2025-09-14 18:28:03', '2025-09-14 18:28:03');
 
 -- Dump della struttura di tabella esame_sessione4.categories
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -81,13 +81,15 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `categories_name_unique` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.categories: ~4 rows (circa)
+-- Dump dei dati della tabella esame_sessione4.categories: ~5 rows (circa)
 INSERT INTO `categories` (`id`, `name`, `label`, `description`, `created_at`, `updated_at`) VALUES
 	(1, 'scifi', 'Sci-Fi', NULL, '2025-07-06 19:40:49', '2025-07-06 19:40:49'),
 	(2, 'family', 'Family', 'For all the Family!', '2025-07-06 19:40:49', '2025-07-06 19:40:49'),
-	(3, 'comedy', 'Comedy', NULL, '2025-07-06 19:40:49', '2025-07-06 19:40:49');
+	(3, 'comedy', 'Comedy', NULL, '2025-07-06 19:40:49', '2025-07-06 19:40:49'),
+	(7, 'mioTest', 'Test numero 1', 'Questo è un test per il video', '2025-08-05 11:11:43', '2025-08-05 11:11:43'),
+	(8, 'mioTest4', 'Test numero 1', 'Questo è un test per il video', '2025-08-05 11:20:49', '2025-08-05 11:20:49');
 
 -- Dump della struttura di tabella esame_sessione4.category_film
 CREATE TABLE IF NOT EXISTS `category_film` (
@@ -128,14 +130,15 @@ CREATE TABLE IF NOT EXISTS `configs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella esame_sessione4.configs: ~4 rows (circa)
 INSERT INTO `configs` (`id`, `key`, `value`, `created_at`, `updated_at`) VALUES
 	(1, 'max_login_attempts', 3, '2025-07-06 19:40:49', '2025-07-06 19:40:49'),
 	(2, 'max_login_time_duration', 600, '2025-07-06 19:40:49', '2025-07-06 19:40:49'),
 	(3, 'max_token_duration', 18000, '2025-07-06 19:40:49', '2025-07-06 19:40:49'),
-	(4, 'login_lock_duration', 900, '2025-07-06 19:40:49', '2025-07-06 19:40:49');
+	(4, 'login_lock_duration', 900, '2025-07-06 19:40:49', '2025-07-06 19:40:49'),
+	(5, 'login_attempt_duration', 60, '2025-09-03 17:14:19', '2025-09-03 17:14:19');
 
 -- Dump della struttura di tabella esame_sessione4.continents
 CREATE TABLE IF NOT EXISTS `continents` (
@@ -435,11 +438,12 @@ CREATE TABLE IF NOT EXISTS `credits` (
   PRIMARY KEY (`id`),
   KEY `credits_user_id_foreign` (`user_id`),
   CONSTRAINT `credits_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.credits: ~0 rows (circa)
+-- Dump dei dati della tabella esame_sessione4.credits: ~1 rows (circa)
 INSERT INTO `credits` (`id`, `user_id`, `value`, `created_at`, `updated_at`) VALUES
-	(1, 7, 0.43, '2025-07-26 11:11:49', '2025-07-26 11:20:24');
+	(2, 10, 0.00, '2025-09-05 15:12:00', '2025-09-05 15:12:00'),
+	(16, 25, 0.00, '2025-09-14 18:28:03', '2025-09-14 18:28:03');
 
 -- Dump della struttura di tabella esame_sessione4.custom_translations
 CREATE TABLE IF NOT EXISTS `custom_translations` (
@@ -473,7 +477,7 @@ CREATE TABLE IF NOT EXISTS `episodes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_episode_per_season_per_series` (`tv_series_id`,`season_number`,`episode_number`),
   CONSTRAINT `episodes_tv_series_id_foreign` FOREIGN KEY (`tv_series_id`) REFERENCES `tv_series` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella esame_sessione4.episodes: ~0 rows (circa)
 
@@ -8695,14 +8699,12 @@ CREATE TABLE IF NOT EXISTS `jwt_secrets` (
   UNIQUE KEY `jwt_secrets_secret_unique` (`secret`),
   KEY `jwt_secrets_user_id_foreign` (`user_id`),
   CONSTRAINT `jwt_secrets_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.jwt_secrets: ~4 rows (circa)
+-- Dump dei dati della tabella esame_sessione4.jwt_secrets: ~1 rows (circa)
 INSERT INTO `jwt_secrets` (`id`, `user_id`, `secret`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'd65b7f589690e3a1d51142c5aff959fa86908eacc389ac83578c3350b3812154', '2025-07-06 19:41:41', '2025-07-11 18:35:52'),
-	(2, 2, '08ada31328e6a37c25a2566d1edd5667c3d991976412a1ebfeebe49004b8cf22', '2025-07-06 19:41:59', '2025-08-02 18:17:54'),
-	(3, 3, '46f5bd1976e0e78da11f6dc6feaa830da9aa6445952b2fe36e94c44334e06a3b', '2025-07-06 19:42:13', '2025-07-06 19:42:13'),
-	(4, 7, '58c2ea50063359b1d1c6cd3859b3ecdc0a1ede56c6a3cc56cde1f686e283287c', '2025-07-23 08:31:01', '2025-08-02 18:10:32');
+	(5, 10, 'cb7ec1fdcf631c39cadd9a7021488b7e6f6f97914ebc697bc817997a2e42779f', '2025-09-05 15:12:00', '2025-09-05 16:58:36'),
+	(7, 25, '5ca8127f02e8534866b11a45b84fb96dc6d5494461c68a48eb39e9bff94cbed6', '2025-09-14 18:28:03', '2025-09-14 18:35:45');
 
 -- Dump della struttura di tabella esame_sessione4.languages
 CREATE TABLE IF NOT EXISTS `languages` (
@@ -8731,9 +8733,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.migrations: ~38 rows (circa)
+-- Dump dei dati della tabella esame_sessione4.migrations: ~41 rows (circa)
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2025_06_02_000001_create_users_table', 1),
 	(2, '2025_06_02_000002_create_user_profiles_table', 1),
@@ -8772,9 +8774,28 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(103, '2025_07_28_000001_create_files_table', 11),
 	(104, '2025_07_28_000002_create_fileables_table', 11),
 	(105, '2025_08_01_000001_change_films_table copy', 11),
-	(106, '2025_08_01_000002_change_tv_series_table', 12),
-	(107, '2025_08_01_000003_recreate_episodes_table', 12),
-	(108, '2025_08_01_000004_change_episodes_table', 12);
+	(117, '2025_08_01_000002_change_tv_series_table', 12),
+	(118, '2025_08_01_000003_recreate_episodes_table', 12),
+	(119, '2025_08_01_000004_change_episodes_table', 12),
+	(120, '2025_09_03_000001_add_accesses_checks', 13),
+	(121, '2025_09_09_140845_create_passwords_table', 14);
+
+-- Dump della struttura di tabella esame_sessione4.passwords
+CREATE TABLE IF NOT EXISTS `passwords` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `salt` varchar(64) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `passwords_user_id_foreign` (`user_id`),
+  CONSTRAINT `passwords_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dump dei dati della tabella esame_sessione4.passwords: ~1 rows (circa)
+INSERT INTO `passwords` (`id`, `user_id`, `password`, `salt`, `created_at`, `updated_at`) VALUES
+	(14, 25, 'a543e53b4dd2a5de9cbca0309e2690d04310c35da17d3696e85530c5b2dc3e0c', 'ff398e9328d48e5f676b3a709c5b6c863b9648d8a3a3a483dcfcb1666f55df5e', '2025-09-14 18:28:03', '2025-09-14 18:28:03');
 
 -- Dump della struttura di tabella esame_sessione4.permissions
 CREATE TABLE IF NOT EXISTS `permissions` (
@@ -8847,8 +8868,8 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 
 -- Dump dei dati della tabella esame_sessione4.sessions: ~1 rows (circa)
 INSERT INTO `sessions` (`jti`, `user_id`, `issued_at`, `expires_at`, `revoked_at`, `created_at`, `updated_at`) VALUES
-	('690ec052-3ed7-4dc3-a9d7-61d717285900', 7, '2025-08-02 18:10:32', '2025-08-02 23:10:32', NULL, '2025-08-02 18:10:34', '2025-08-02 18:10:34'),
-	('e8c3ae28-9a35-4a8a-850a-d59104d32dd3', 2, '2025-08-02 18:17:54', '2025-08-02 23:17:54', NULL, '2025-08-02 18:17:54', '2025-08-02 18:17:54');
+	('3b615ce6-acf6-4fba-ac13-43795b7eccee', 25, '2025-09-14 18:35:45', '2025-09-14 23:35:45', NULL, '2025-09-14 18:35:45', '2025-09-14 18:35:45'),
+	('ec200ac2-9030-45ec-8dd9-a15562192364', 10, '2025-09-05 16:58:36', '2025-09-05 21:58:36', NULL, '2025-09-05 16:58:37', '2025-09-05 16:58:37');
 
 -- Dump della struttura di tabella esame_sessione4.states
 CREATE TABLE IF NOT EXISTS `states` (
@@ -8905,7 +8926,7 @@ CREATE TABLE IF NOT EXISTS `tv_series` (
   `directors` varchar(255) NOT NULL,
   `actors` varchar(255) NOT NULL,
   `start_year` smallint(5) unsigned NOT NULL,
-  `end_year` smallint(5) unsigned DEFAULT NULL,
+  `end_year` smallint(5) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -8921,8 +8942,6 @@ INSERT INTO `tv_series` (`id`, `name`, `description`, `season_count`, `episode_c
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
-  `password` varchar(64) NOT NULL,
-  `salt` varchar(64) NOT NULL,
   `state_id` bigint(20) unsigned NOT NULL DEFAULT 1,
   `state_until` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -8930,18 +8949,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_username_unique` (`username`),
-  UNIQUE KEY `users_salt_unique` (`salt`),
   KEY `users_state_id_foreign` (`state_id`),
   CONSTRAINT `users_state_id_foreign` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.users: ~5 rows (circa)
-INSERT INTO `users` (`id`, `username`, `password`, `salt`, `state_id`, `state_until`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 'test', '$2y$12$PwXwU1UDdFEwKXKF0NONR.TdFuU.V8ovXHBcmwRk95Is3gcOku7jS', '650debef33d24e3b0590ab9c881da51d7601ef1039ee90dd9136e00a86c721d8', 1, NULL, '2025-07-06 19:41:40', '2025-07-06 19:41:40', NULL),
-	(2, 'test2', '$2y$12$IimW2XGdhqhpGRIl.sCTOOWemZgxh6o41wQwLgnaMaS4SNWupRvli', 'adae175c65ebe26c3fe340e6625192c8d09d9cacf3b5a872f6bddf14a5e8d27f', 1, NULL, '2025-07-06 19:41:59', '2025-07-06 19:41:59', NULL),
-	(3, 'test3', '$2y$12$I8kQeFCXPQnqVz9TGQLbmuUl5jzW.nRGTyrlkOoPA6LnIFS1PGTY2', '5354ceae71e0707bba866fe6918aee2dc56bc4660835df36475a6fd76f7fd00d', 1, NULL, '2025-07-06 19:42:12', '2025-07-06 19:42:12', NULL),
-	(6, 'test4', '$2y$12$4A/BSwYFaAahZZTW7xMQ6.mA34SoxfW.jbKY9RLVsmsZm3ZAhT9nm', '523b080d83731c7ff4a67e878270bd4eb620d8ec9c3f7256c28e87d46b26a23a', 1, NULL, '2025-07-23 08:30:05', '2025-07-23 08:30:05', NULL),
-	(7, 'myTest', '$2y$12$0LCP/6uC9JSfj2wFAIztkuZzC.FSDxPEl2xdMs.RvmOTGMnHkoYnO', '1305329d7934e8f3e03ced467ddbc7ff277e50d723b0e6a6a5d5f002463b7801', 1, NULL, '2025-07-23 08:31:00', '2025-07-25 18:53:47', NULL);
+-- Dump dei dati della tabella esame_sessione4.users: ~2 rows (circa)
+INSERT INTO `users` (`id`, `username`, `state_id`, `state_until`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(10, 'myTest', 1, NULL, '2025-09-05 15:12:00', '2025-09-05 15:12:00', NULL),
+	(25, '73dd788969efe16e001528df4a2036ff94c1927b38a5aa0ba4deb5918b10ebd9', 1, NULL, '2025-09-14 18:28:03', '2025-09-14 18:28:03', NULL);
 
 -- Dump della struttura di tabella esame_sessione4.user_profiles
 CREATE TABLE IF NOT EXISTS `user_profiles` (
@@ -8959,15 +8974,12 @@ CREATE TABLE IF NOT EXISTS `user_profiles` (
   UNIQUE KEY `user_profiles_email_unique` (`email`),
   KEY `user_profiles_user_id_foreign` (`user_id`),
   CONSTRAINT `user_profiles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.user_profiles: ~5 rows (circa)
+-- Dump dei dati della tabella esame_sessione4.user_profiles: ~2 rows (circa)
 INSERT INTO `user_profiles` (`id`, `user_id`, `name`, `surname`, `email`, `birthdate`, `gender`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 1, 'test', 'surnameTest', 'emai@example.com', '2028-10-02', 'male', '2025-07-06 19:41:40', '2025-07-06 19:41:40', NULL),
-	(2, 2, 'test2', 'surnameTest', 'email@example.com', '2028-10-02', 'male', '2025-07-06 19:41:59', '2025-07-06 19:41:59', NULL),
-	(3, 3, 'test3', 'surnameTest', 'emal@example.com', '2028-10-02', 'male', '2025-07-06 19:42:12', '2025-07-06 19:42:12', NULL),
-	(6, 6, 'test3', 'surnameTest', 'test@example.com', '2028-10-02', 'male', '2025-07-23 08:30:05', '2025-07-23 08:30:05', NULL),
-	(7, 7, 'test3', 'surnameTest', 'mytest@example.com', '2028-10-02', 'male', '2025-07-23 08:31:00', '2025-07-23 08:31:00', NULL);
+	(10, 10, 'test', 'surnameTest', 'mytest@example.com', '2028-10-02', 'male', '2025-09-05 15:12:00', '2025-09-05 15:12:00', NULL),
+	(24, 25, 'test', 'surnameTest', 'mytet@example.com', '2028-10-02', 'male', '2025-09-14 18:28:03', '2025-09-14 18:28:03', NULL);
 
 -- Dump della struttura di tabella esame_sessione4.user_role
 CREATE TABLE IF NOT EXISTS `user_role` (
@@ -8979,20 +8991,12 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   CONSTRAINT `user_role_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella esame_sessione4.user_role: ~12 rows (circa)
+-- Dump dei dati della tabella esame_sessione4.user_role: ~2 rows (circa)
 INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
-	(1, 1),
-	(1, 2),
-	(1, 3),
-	(2, 2),
-	(2, 3),
-	(3, 3),
-	(6, 1),
-	(6, 2),
-	(6, 3),
-	(7, 1),
-	(7, 2),
-	(7, 3);
+	(10, 2),
+	(10, 3),
+	(25, 2),
+	(25, 3);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

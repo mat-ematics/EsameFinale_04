@@ -10,14 +10,17 @@ use Illuminate\Support\Arr;
 class ProfileService {
     
     protected AddressService $addressService;
+    protected PasswordService $passwordService;
     
     /**
      * Inizializzatore dei Servizi
      */
-    public function __construct(AddressService $addressService)
+    public function __construct(AddressService $addressService, PasswordService $passwordService)
     {
         $this->addressService = $addressService;
+        $this->passwordService = $passwordService;
     }
+
 
     public function getProfile(User $authUser) : ProfileResource
     {
@@ -28,17 +31,13 @@ class ProfileService {
     {
         $data = array_filter($data);
 
-        $pswHash = isset($data['password']) ? AppHelpers::customHash($data['password'], $authUser->salt) : null;
-
         //Update di Utente e Password
-        $userCredentials = array_filter([ //Filtra i valori nulli
-            'username' => $data['username'] ?? null,
-            'password' => $pswHash,
-        ]); 
+        $authUser->update(array_filter([ //Filtra i valori nulli
+            'username' => User::getUsernameHash($data['username']),
+        ]));
 
-        //Aggiorna Username e/o password se presenti
-        if (!empty($userCredentials)) {
-            $authUser->update($userCredentials);
+        if (!empty($data['password'])) {
+            $this->passwordService->updatePassword($authUser, $data['password']);
         }
 
         //Filtro e Aggiornamento delle Informazioni Profilo

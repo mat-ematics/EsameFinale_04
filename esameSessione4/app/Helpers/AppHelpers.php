@@ -37,7 +37,8 @@ class AppHelpers {
 
     public static function customHash (#[\SensitiveParameter] string $string, string $salt = '') : string
     {
-        return Hash::make($salt . $string);
+        $combined = hash('sha256', $salt . $string);
+        return Hash::make($combined);
     }
 
     public static function checkHash(#[\SensitiveParameter] string $string, string $hash, string $salt = '') : bool

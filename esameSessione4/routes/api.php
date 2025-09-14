@@ -9,6 +9,7 @@ use App\Http\Controllers\api\v1\ProfileController;
 use App\Http\Controllers\api\v1\TvSeriesController;
 use App\Http\Controllers\api\v1\UserController;
 use App\Http\Middleware\ProtectLogin;
+use App\Http\Middleware\ProtectNewLogin;
 use App\Http\Middleware\TokenAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -24,7 +25,14 @@ Route::prefix(_VERS)->group(function () {
     
     //ROUTE AUTENTICAZIONE 
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login'])->middleware(ProtectLogin::class);
+    // Route::post('/login', [AuthController::class, 'login'])->middleware(ProtectLogin::class);
+
+    Route::get('/login/{userHash}', [AuthController::class, 'getLoginSalt']);
+    Route::get('/login/{userHash}/{passwordHash}', [AuthController::class, 'newLogin'])->middleware(ProtectNewLogin::class);
+        
+    if (app()->environment(['local', 'testing'])) {
+        Route::get('/login/test/{username}/{password}', [AuthController::class, 'testLogin']);
+    }
 
     Route::middleware([TokenAuth::class])->group(function () {
 

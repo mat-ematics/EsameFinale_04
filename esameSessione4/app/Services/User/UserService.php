@@ -14,18 +14,21 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserService {
 
     protected AddressService $addressService;
+    protected PasswordService $passwordService;
     
     /**
      * Inizializzatore dei Servizi
      */
-    public function __construct(AddressService $addressService)
+    public function __construct(AddressService $addressService, PasswordService $passwordService)
     {
         $this->addressService = $addressService;
+        $this->passwordService = $passwordService;
     }
 
 
@@ -52,17 +55,17 @@ class UserService {
     public function createUser(array $data) : UserResource
     {
         return DB::transaction(function () use ($data) {
-            
-            //Creazione Hash e Salt di Password
-            $pswSalt = AppHelpers::generateSalt();
-            $pswHash = AppHelpers::customHash($data['password'], $pswSalt);
 
             //Creazione Record Utente
+            $userHash = User::getUsernameHash($data['username']);
+            // Log::alert("Username in creation: " . $data['username']);
+            // Log::alert("Hash in creation: " . $userHash);
             $newUser = User::create([
-                'username' => $data['username'],
-                'password' => $pswHash,
-                'salt' => $pswSalt
+                'username' => $userHash,
             ]);
+
+            
+            $this->passwordService->createPassword($newUser, $data['password']);
 
             //Creazione Record Profilo Utente
             UserProfile::create([
@@ -81,7 +84,7 @@ class UserService {
             $this->assignRolesToUser($newUser, $data['role']);
 
             //Creazione Record Credito
-            $newUser->credit()->create(['value' => $data['value']]);
+            $newUser->credit()->create(['value' => $data['credit']]);
 
             //Creazione Record Indirizzo
             $this->addressService->createAddress($newUser, $data);
@@ -118,9 +121,9 @@ class UserService {
     {
         $data = array_filter($data);
     
-        //Aggiorna Username e/o password se presenti
+        //Aggiorna Username se presente
         if (!empty($data['username'])) {
-            $user->update(['username' => $data['username']]);
+            $user->update(['username' => User::getUsernameHash($data['username'])]);
         }
 
         //Update Ruoli

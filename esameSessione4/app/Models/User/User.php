@@ -41,6 +41,21 @@ class User extends Authenticatable
 
     /* --------- RELAZIONI ---------*/
 
+    public function passwords()
+    {
+        return $this->hasMany(Password::class);
+    }
+
+    public function currentPassword()
+    {
+        return $this->hasOne(Password::class)->latestOfMany();
+    }
+
+    public function oldestPassword()
+    {
+        return $this->hasOne(Password::class)->oldestOfMany();
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_role')->using(UserRole::class);
@@ -104,11 +119,6 @@ class User extends Authenticatable
         $this->roles()->detach($role->id);
     }
 
-    public function checkPassword(#[\SensitiveParameter] string $password) : bool
-    {
-        return Hash::check($this->salt . $password, $this->password);
-    }
-
     public function getState() : StateEnum
     {
         return StateEnum::from($this->state->name);
@@ -146,5 +156,16 @@ class User extends Authenticatable
     public static function getUserByUsername(string $username) : ?self
     {
         return static::where('username', $username)->first();
+    }
+
+    public static function getUserByUsernameHash(string $username) : ?self
+    {
+        $userHash = static::getUsernameHash($username);
+        return static::where('username', $userHash)->first();
+    }
+
+    public static function getUsernameHash(?string $username) : ?string
+    {
+        return $username ? hash('sha256', $username) : null;
     }
 }

@@ -32,7 +32,6 @@ class AuthService {
         $this->jwtService = $jwtService;
     }
 
-
     /**
      * Ritorna la Risorsa del Profilo dell'utente passato
      */
@@ -44,14 +43,22 @@ class AuthService {
 
     public function loginUser(string $username, string $password, string $ip) : array
     {
-        $access = Access::getAccessByIp($ip);
+        $access = Access::getAccess($ip, $username);
         if (!$access) {
-            $access = Access::createAccess($ip);
+            $access = Access::createAccess($ip, $username);
         }
         
         $user = User::getUserByUsername($username);
 
-        if (!isset($user) || !$user->checkPassword($password)) {
+        // if (!isset($user)) {
+        //     Log::alert('user does not exist');
+        // }
+
+        if (!$user->currentPassword->checkPasswordLogin($password)) {
+            Log::alert('Password is wrong! Given: ' . $password . ' Actual: ' . $user->currentPassword->password);
+        }
+
+        if (!isset($user) || !$user->currentPassword->checkPasswordLogin($password)) {
             $access->addError();
             throw new InvalidCredentialsException();
         }
@@ -84,7 +91,7 @@ class AuthService {
             $tokenArr = $this->jwtService->generateJwtToken($user->id, $secret);
 
             $access->delete();
-            
+
             Session::deleteSession($user->id);
             Session::startSession($user->id, $tokenArr['jti'], $tokenArr['iat'], $tokenArr['exp']);
 
